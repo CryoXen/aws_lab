@@ -227,13 +227,7 @@ nav a:hover { color:white; }
 .t-iac     { background:rgba(192,132,252,.18); color:#D8B4FE;border:1px solid rgba(192,132,252,.35); }
 .t-bi      { background:rgba(251,191,36,.16);  color:#FCD34D;border:1px solid rgba(251,191,36,.35); }
 .t-serverless { background:rgba(244,114,182,.16); color:#F9A8D4;border:1px solid rgba(244,114,182,.35); }
-.item-arrow {
-  width:28px;height:28px;border-radius:50%;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.7);font-size:.8rem;transition:background .2s;
-}
-.item-card:hover .item-arrow { background:rgba(255,255,255,.25); }
+.item-arrow { display:none; }
 .slider-nav { display:none; }
 .slider-dots { display:flex;gap:6px;position:absolute;bottom:22px;left:50%;transform:translateX(-50%);align-items:center; }
 .sdot { width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s ease;cursor:pointer; }
@@ -392,12 +386,12 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
           <span class="slide-badge">1 tarea</span>
         </div>
         <div class="items-grid">
-          <div class="item-card">
+          <div class="item-card" onclick="window.open('https://github.com/CryoXen/aws_lab','_blank')" style="cursor:pointer;">
             <div class="item-img"><div class="item-img-inner bg-c"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><span class="item-pill">Tarea 1</span></div>
             <div class="item-body">
               <h3 class="item-title">GitHub Runner &amp; GitHub Pages</h3>
               <p class="item-desc">Configuración de un self-hosted runner en GitHub Actions y despliegue de una página estática mediante GitHub Pages.</p>
-              <div class="item-footer"><span class="item-status t-aws">GitHub · CI/CD</span><div class="item-arrow">→</div></div>
+              <div class="item-footer"><span class="item-status t-aws">GitHub · CI/CD</span></div>
             </div>
           </div>
         </div>
