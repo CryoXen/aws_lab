@@ -46,6 +46,16 @@ body:has(.item-card:hover) #cursor-ring {
 }
 html { scroll-behavior:smooth; }
 
+/* Custom text selection */
+::selection {
+  background:rgba(45,212,191,.15);
+  color:rgba(255,255,255,.55);
+}
+::-moz-selection {
+  background:rgba(45,212,191,.15);
+  color:rgba(255,255,255,.55);
+}
+
 /* Hide scrollbar globally */
 html::-webkit-scrollbar { display:none; }
 html { -ms-overflow-style:none; scrollbar-width:none; }
@@ -406,48 +416,98 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
   <div class="slider-topbar">
     <div class="slider-tabs" id="sliderTabs">
       <div class="tabs-indicator" id="tabsIndicator"></div>
-      <button class="tab-btn active" onclick="goTo(0)">Tareas</button>
-      <button class="tab-btn" onclick="goTo(1)">Laboratorios</button>
+      <button class="tab-btn active" onclick="goTo(0)">Actividades</button>
+      <button class="tab-btn" onclick="goTo(1)">Tareas</button>
       <button class="tab-btn" onclick="goTo(2)">Proyecto Final</button>
     </div>
   </div>
 
   <div class="slides-viewport">
     <div class="slides-track" id="slidesTrack">
-
       <!-- SLIDE 1: TAREAS -->
       <div class="slide">
         <div class="slide-header">
           <div>
-            <p class="slide-cat-desc">Actividades de investigación y documentación sobre fundamentos cloud, servicios AWS y arquitecturas de datos modernas.</p>
+            <p class="slide-cat-desc">Tareas asignadas: configuración de herramientas, ejercicios de programación y prácticas con datos.</p>
           </div>
-          <span class="slide-badge">1 tarea</span>
+          <span class="slide-badge">3 tareas</span>
         </div>
         <div class="items-grid">
-          <div class="item-card" onclick="window.open('https://github.com/CryoXen/aws_lab','_blank')" style="cursor:pointer;">
-            <div class="item-img"><div class="item-img-inner bg-c"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><span class="item-pill">Tarea 1</span></div>
+
+          <!-- Tarea 1: GitHub Runner -->
+          <div class="item-card" onclick="window.open('./tareas/Tarea1.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-c">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </div><span class="item-pill">Tarea 1</span></div>
             <div class="item-body">
               <h3 class="item-title">GitHub Runner &amp; GitHub Pages</h3>
               <p class="item-desc">Configuración de un self-hosted runner en GitHub Actions y despliegue de una página estática mediante GitHub Pages.</p>
-              <div class="item-footer"><span class="item-status t-aws">GitHub · CI/CD</span></div>
+              <div class="item-footer"><span class="item-status t-aws">GitHub CI/CD</span></div>
             </div>
           </div>
+
+          <!-- Tarea 2: CodeCombat -->
+          <div class="item-card" onclick="window.open('./tareas/codecombat.png','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-g">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div><span class="item-pill">Tarea 2</span></div>
+            <div class="item-body">
+              <h3 class="item-title">CodeCombat</h3>
+              <p class="item-desc">Actividad de juego con Python: resolución de niveles y desafíos de programación en CodeCombat.</p>
+              <div class="item-footer"><span class="item-status t-python">Python · Game</span></div>
+            </div>
+          </div>
+
+          <!-- Tarea 3: Limpieza con Pandas -->
+          <div class="item-card" onclick="window.open('./actividades/Limpieza_pandas.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-c">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div><span class="item-pill">Tarea 3</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Limpieza con Pandas</h3>
+              <p class="item-desc">Práctica de limpieza y transformación de datos con Python y Pandas: manejo de nulos, tipos y normalización.</p>
+              <div class="item-footer"><span class="item-status t-python">Python · Pandas</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <!-- SLIDE 2: LABORATORIOS -->
+      <!-- SLIDE 2: ACTIVIDADES -->
       <div class="slide">
         <div class="slide-header">
           <div>
-            <p class="slide-cat-desc">Prácticas hands-on sobre servicios AWS con implementación real de pipelines, consultas y dashboards de datos.</p>
+            <p class="slide-cat-desc">Actividades diarias de clase: notas, apuntes y ejercicios sobre fundamentos cloud, servicios AWS y arquitecturas de datos.</p>
           </div>
-          <span class="slide-badge">Sin elementos</span>
+          <span class="slide-badge">2 actividades</span>
         </div>
-        <div class="empty-state">
-          <span class="empty-shine">Aún no hay nada por aquí...</span>
+        <div class="items-grid">
+
+          <!-- Actividad 1 -->
+          <div class="item-card" onclick="window.open('./actividades/clase120336.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-a">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div><span class="item-pill">Diaria 1</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Clase 12-03-26</h3>
+              <p class="item-desc">Actividad diaria: fundamentos cloud y servicios AWS, conceptos clave y arquitecturas de datos modernas.</p>
+              <div class="item-footer"><span class="item-status t-aws">AWS · Cloud</span></div>
+            </div>
+          </div>
+
+          <!-- Actividad 2 -->
+          <div class="item-card" onclick="window.open('./actividades/clase130326.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-f">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div><span class="item-pill">Diaria 2</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Clase 13-03-26</h3>
+              <p class="item-desc">Actividad diaria: arquitecturas AWS, almacenamiento, pipelines de datos y servicios de análisis en la nube.</p>
+              <div class="item-footer"><span class="item-status t-aws">AWS · Data</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
-
       <!-- SLIDE 3: PROYECTO FINAL -->
       <div class="slide">
         <div class="slide-header">
@@ -460,12 +520,8 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
           <span class="empty-shine">Aún no hay nada por aquí...</span>
         </div>
       </div>
-
-    </div>
-  </div>
-
-
-  <div class="slider-dots" id="sliderDots">
+      </div>
+      <div class="slider-dots" id="sliderDots">
     <div class="sdot active" onclick="goTo(0)"></div>
     <div class="sdot" onclick="goTo(1)"></div>
     <div class="sdot" onclick="goTo(2)"></div>
