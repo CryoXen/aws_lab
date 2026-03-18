@@ -416,8 +416,8 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
   <div class="slider-topbar">
     <div class="slider-tabs" id="sliderTabs">
       <div class="tabs-indicator" id="tabsIndicator"></div>
-      <button class="tab-btn active" onclick="goTo(0)">Actividades</button>
-      <button class="tab-btn" onclick="goTo(1)">Tareas</button>
+      <button class="tab-btn active" onclick="goTo(0)">Tareas</button>
+      <button class="tab-btn" onclick="goTo(1)">Actividades</button>
       <button class="tab-btn" onclick="goTo(2)">Proyecto Final</button>
     </div>
   </div>
@@ -430,11 +430,10 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
           <div>
             <p class="slide-cat-desc">Tareas asignadas: configuración de herramientas, ejercicios de programación y prácticas con datos.</p>
           </div>
-          <span class="slide-badge">3 tareas</span>
+          <span class="slide-badge">4 tareas</span>
         </div>
         <div class="items-grid">
 
-          <!-- Tarea 1: GitHub Runner -->
           <div class="item-card" onclick="window.open('./tareas/Tarea1.html','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-c">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
@@ -446,7 +445,6 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
             </div>
           </div>
 
-          <!-- Tarea 2: CodeCombat -->
           <div class="item-card" onclick="window.open('./tareas/codecombat.png','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-g">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -458,7 +456,6 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
             </div>
           </div>
 
-          <!-- Tarea 3: Limpieza con Pandas -->
           <div class="item-card" onclick="window.open('./actividades/Limpieza_pandas.html','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-c">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -470,19 +467,29 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
             </div>
           </div>
 
+
+          <div class="item-card" onclick="window.open('./tareas/lambdas.pdf','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-b">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div><span class="item-pill">Tarea 4</span></div>
+            <div class="item-body">
+              <h3 class="item-title">AWS Lambdas</h3>
+              <p class="item-desc">Documentación y ejercicios sobre funciones Lambda en AWS: arquitectura serverless y casos de uso.</p>
+              <div class="item-footer"><span class="item-status t-serverless">AWS · Serverless</span></div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- SLIDE 2: ACTIVIDADES -->
       <div class="slide">
         <div class="slide-header">
           <div>
-            <p class="slide-cat-desc">Actividades diarias de clase: notas, apuntes y ejercicios sobre fundamentos cloud, servicios AWS y arquitecturas de datos.</p>
+            <p class="slide-cat-desc">Actividades diarias de clase: notas y ejercicios sobre fundamentos cloud, servicios AWS y arquitecturas de datos.</p>
           </div>
-          <span class="slide-badge">2 actividades</span>
+          <span class="slide-badge">4 actividades</span>
         </div>
         <div class="items-grid">
 
-          <!-- Actividad 1 -->
           <div class="item-card" onclick="window.open('./actividades/clase120336.html','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-a">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -494,7 +501,6 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
             </div>
           </div>
 
-          <!-- Actividad 2 -->
           <div class="item-card" onclick="window.open('./actividades/clase130326.html','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-f">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
@@ -506,6 +512,27 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
             </div>
           </div>
 
+
+          <div class="item-card" onclick="window.open('./actividades/ejercicio2_challenges.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-d">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div><span class="item-pill">Diaria 3</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Ejercicio 2 — Challenges</h3>
+              <p class="item-desc">Resolución de ejercicios y desafíos de programación como actividad diaria de clase.</p>
+              <div class="item-footer"><span class="item-status t-python">Python · Ejercicios</span></div>
+            </div>
+          </div>
+          <div class="item-card" onclick="window.open('./actividades/netflix_limpieza.ipynb','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-e">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div><span class="item-pill">Diaria 4</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Netflix — Limpieza de Datos</h3>
+              <p class="item-desc">Notebook de Jupyter: limpieza y análisis del dataset de Netflix con Python y Pandas.</p>
+              <div class="item-footer"><span class="item-status t-python">Python · Pandas · Notebook</span></div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- SLIDE 3: PROYECTO FINAL -->
@@ -519,6 +546,7 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
         <div class="empty-state">
           <span class="empty-shine">Aún no hay nada por aquí...</span>
         </div>
+      </div>
       </div>
       </div>
       <div class="slider-dots" id="sliderDots">
