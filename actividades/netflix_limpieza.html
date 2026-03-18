@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Limpieza de Datos — Netflix Titles</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #161616;
+      --surface2: #1c1c1c;
+      --border: #2c2c2c;
+      --red: #9b72cf;
+      --text: #e0e0e0;
+      --muted: #777;
+      --code-bg: #111;
+      --green: #4caf50;
+      --yellow: #e8c55e;
+      --blue: #6ab0f5;
+      --font-mono: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* HEADER */
+    header {
+      background: #111;
+      border-bottom: 3px solid var(--red);
+      padding: 2rem 2.5rem;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    header p code {
+      background: #222;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      color: var(--yellow);
+    }
+    .tag {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-left: 0.6rem;
+      vertical-align: middle;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+      gap: 2.5rem;
+    }
+
+    /* SIDEBAR TOC */
+    .toc {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 1.5rem;
+      align-self: flex-start;
+    }
+    .toc-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    .toc ol {
+      padding: 0;
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+    .toc li {
+      counter-increment: toc-counter;
+      margin: 0;
+    }
+    .toc a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc a::before {
+      content: counter(toc-counter);
+      color: var(--red);
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      min-width: 16px;
+    }
+    .toc a:hover { background: var(--surface); color: var(--text); }
+
+    /* MAIN CONTENT */
+    .content { flex: 1; min-width: 0; }
+
+    /* SECTION */
+    .section { margin-bottom: 3rem; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
+    }
+    .step-num {
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+    }
+    .section h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      flex: 1;
+    }
+
+    /* DESCRIPTION BLOCK */
+    .desc {
+      background: var(--surface);
+      border-left: 3px solid #333;
+      border-radius: 0 6px 6px 0;
+      padding: 0.75rem 1.1rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.88rem;
+      color: #aaa;
+    }
+    .desc code {
+      background: #252525;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      color: var(--yellow);
+    }
+
+    /* CODE BLOCK */
+    .code-wrap {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.9rem;
+    }
+    .code-head {
+      background: var(--surface2);
+      padding: 0.4rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .code-head .cell-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .lang {
+      background: #1a1630;
+      color: #b392f0;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.4px;
+    }
+    pre {
+      padding: 1.1rem 1.3rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: #c9d1d9;
+      tab-size: 4;
+    }
+
+    /* Syntax */
+    .kw  { color: #f97583; }
+    .fn  { color: #b392f0; }
+    .str { color: #9ecbff; }
+    .cm  { color: #586069; font-style: italic; }
+    .num { color: var(--yellow); }
+    .var { color: #ffab70; }
+
+    /* SUMMARY TABLE */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 0.5rem;
+    }
+    .summary-table th {
+      background: #1a1a1a;
+      color: var(--muted);
+      padding: 0.55rem 1rem;
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 2px solid var(--red);
+    }
+    .summary-table td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: #bbb;
+      vertical-align: top;
+    }
+    .summary-table td:first-child {
+      color: var(--yellow);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+    .summary-table tr:hover td { background: #161616; }
+    .summary-table code {
+      background: #252525;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 0.8em;
+      color: var(--yellow);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: #444;
+      font-size: 0.78rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 700px) {
+      .toc { display: none; }
+      .layout { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Limpieza de Datos — Netflix Titles <span class="tag">PySpark</span></h1>
+  <p>Análisis y limpieza del dataset <code>netflix_titles.csv</code> con Apache PySpark.</p>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li><a href="#s1">Iniciar SparkSession</a></li>
+      <li><a href="#s2">Exploración inicial</a></li>
+      <li><a href="#s3">Detección de nulos</a></li>
+      <li><a href="#s4">Conteo de duplicados</a></li>
+      <li><a href="#s5">Eliminar duplicados</a></li>
+      <li><a href="#s6">Rellenar nulos</a></li>
+      <li><a href="#s7">Limpieza de texto</a></li>
+      <li><a href="#s8">Convertir date_added</a></li>
+      <li><a href="#s9">Convertir release_year</a></li>
+      <li><a href="#s10">Distribución por tipo</a></li>
+      <li><a href="#s11">Top 10 países</a></li>
+      <li><a href="#s12">Contenido por año</a></li>
+      <li><a href="#s13">Verificación final</a></li>
+      <li><a href="#s14">Exportar CSV</a></li>
+      <li><a href="#s15">Resumen</a></li>
+    </ol>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="section" id="s1">
+      <div class="section-header">
+        <div class="step-num">1</div>
+        <h2>Iniciar SparkSession y cargar el CSV</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 1</span><span class="lang">Python</span></div>
+        <pre><span class="kw">from</span> <span class="var">pyspark.sql</span> <span class="kw">import</span> <span class="fn">SparkSession</span>
+<span class="kw">from</span> <span class="var">pyspark.sql.functions</span> <span class="kw">import</span> <span class="fn">col, count, when, isnull, trim, lower, to_date</span>
+
+<span class="var">spark</span> = <span class="fn">SparkSession</span>.builder.<span class="fn">master</span>(<span class="str">"local"</span>).<span class="fn">appName</span>(<span class="str">"NetflixCleaning"</span>).<span class="fn">getOrCreate</span>()
+<span class="var">spark</span>.sparkContext.<span class="fn">setLogLevel</span>(<span class="str">"ERROR"</span>)</pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 2</span><span class="lang">Python</span></div>
+        <pre><span class="var">file_path</span> = <span class="str">"netflix_titles-3.csv"</span>
+<span class="var">df</span> = <span class="var">spark</span>.read.<span class="fn">csv</span>(<span class="var">file_path</span>, header=<span class="kw">True</span>, inferSchema=<span class="kw">True</span>, multiLine=<span class="kw">True</span>, escape=<span class="str">'"'</span>)
+<span class="var">df</span>.<span class="fn">show</span>(<span class="num">5</span>, truncate=<span class="num">50</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s2">
+      <div class="section-header">
+        <div class="step-num">2</div>
+        <h2>Exploración inicial del DataFrame</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 3</span><span class="lang">Python</span></div>
+        <pre><span class="fn">print</span>(<span class="str">f"Total de registros: {<span class="var">df</span>.<span class="fn">count</span>()}"</span>)
+<span class="fn">print</span>(<span class="str">f"Total de columnas: {<span class="fn">len</span>(<span class="var">df</span>.columns)}"</span>)
+<span class="fn">print</span>(<span class="str">f"Columnas: {<span class="var">df</span>.columns}"</span>)</pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 4</span><span class="lang">Python</span></div>
+        <pre><span class="var">df</span>.<span class="fn">printSchema</span>()</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s3">
+      <div class="section-header">
+        <div class="step-num">3</div>
+        <h2>Detección de valores nulos por columna</h2>
+      </div>
+      <div class="desc">
+        Se cuenta cuántos valores nulos hay en cada columna, tanto en número absoluto como en porcentaje del total.
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 5</span><span class="lang">Python</span></div>
+        <pre><span class="var">null_counts</span> = <span class="var">df</span>.<span class="fn">select</span>([
+    <span class="fn">count</span>(<span class="fn">when</span>(<span class="fn">isnull</span>(c), c)).<span class="fn">alias</span>(c) <span class="kw">for</span> c <span class="kw">in</span> <span class="var">df</span>.columns
+])
+<span class="var">null_counts</span>.<span class="fn">show</span>(truncate=<span class="kw">False</span>)</pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 6</span><span class="lang">Python</span></div>
+        <pre><span class="cm"># Porcentaje de nulos por columna</span>
+<span class="var">total</span> = <span class="var">df</span>.<span class="fn">count</span>()
+<span class="var">null_pct</span> = <span class="var">df</span>.<span class="fn">select</span>([
+    (<span class="fn">count</span>(<span class="fn">when</span>(<span class="fn">isnull</span>(c), c)) / <span class="var">total</span> * <span class="num">100</span>).<span class="fn">alias</span>(c) <span class="kw">for</span> c <span class="kw">in</span> <span class="var">df</span>.columns
+])
+<span class="var">null_pct</span>.<span class="fn">show</span>(truncate=<span class="kw">False</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s4">
+      <div class="section-header">
+        <div class="step-num">4</div>
+        <h2>Conteo de registros duplicados</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 7</span><span class="lang">Python</span></div>
+        <pre><span class="var">total_rows</span>    = <span class="var">df</span>.<span class="fn">count</span>()
+<span class="var">distinct_rows</span> = <span class="var">df</span>.<span class="fn">dropDuplicates</span>().<span class="fn">count</span>()
+
+<span class="fn">print</span>(<span class="str">f"Registros totales:      {<span class="var">total_rows</span>}"</span>)
+<span class="fn">print</span>(<span class="str">f"Registros unicos:       {<span class="var">distinct_rows</span>}"</span>)
+<span class="fn">print</span>(<span class="str">f"Duplicados encontrados: {<span class="var">total_rows</span> - <span class="var">distinct_rows</span>}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s5">
+      <div class="section-header">
+        <div class="step-num">5</div>
+        <h2>Eliminar duplicados</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 8</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span> = <span class="var">df</span>.<span class="fn">dropDuplicates</span>()
+<span class="fn">print</span>(<span class="str">f"Registros despues de eliminar duplicados: {<span class="var">df_clean</span>.<span class="fn">count</span>()}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s6">
+      <div class="section-header">
+        <div class="step-num">6</div>
+        <h2>Rellenar valores nulos</h2>
+      </div>
+      <div class="desc">
+        Se eliminan filas donde las columnas críticas (<code>show_id</code>, <code>type</code>, <code>title</code>) son nulas.
+        El resto de campos de texto vacíos se rellenan con el valor <code>"Unknown"</code>.
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 9</span><span class="lang">Python</span></div>
+        <pre><span class="cm"># Eliminar filas con columnas críticas nulas</span>
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">dropna</span>(subset=[<span class="str">"show_id"</span>, <span class="str">"type"</span>, <span class="str">"title"</span>])
+
+<span class="cm"># Rellenar el resto de columnas de texto</span>
+<span class="var">fill_cols</span> = [<span class="str">"director"</span>, <span class="str">"cast"</span>, <span class="str">"country"</span>, <span class="str">"rating"</span>, <span class="str">"listed_in"</span>, <span class="str">"description"</span>]
+<span class="var">fill_dict</span> = {c: <span class="str">"Unknown"</span> <span class="kw">for</span> c <span class="kw">in</span> <span class="var">fill_cols</span>}
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">fillna</span>(<span class="var">fill_dict</span>)
+
+<span class="fn">print</span>(<span class="str">f"Registros después de limpiar nulos críticos: {<span class="var">df_clean</span>.<span class="fn">count</span>()}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s7">
+      <div class="section-header">
+        <div class="step-num">7</div>
+        <h2>Limpieza de columnas de texto</h2>
+      </div>
+      <div class="desc">
+        Se aplica <code>trim()</code> para quitar espacios al inicio y al final de cada valor.
+        La columna <code>type</code> se convierte a minúsculas para homogeneizar los datos.
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 10</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"title"</span>,    <span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"title"</span>)))
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"director"</span>, <span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"director"</span>)))
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"country"</span>,  <span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"country"</span>)))
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"type"</span>,     <span class="fn">lower</span>(<span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"type"</span>))))
+<span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"rating"</span>,   <span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"rating"</span>)))
+
+<span class="var">df_clean</span>.<span class="fn">select</span>(<span class="str">"title"</span>, <span class="str">"type"</span>, <span class="str">"director"</span>, <span class="str">"country"</span>, <span class="str">"rating"</span>).<span class="fn">show</span>(<span class="num">10</span>, truncate=<span class="num">40</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s8">
+      <div class="section-header">
+        <div class="step-num">8</div>
+        <h2>Convertir date_added a tipo fecha</h2>
+      </div>
+      <div class="desc">
+        La columna <code>date_added</code> viene como texto. Se convierte al tipo <code>DateType</code>
+        usando el formato <code>"MMMM d, yyyy"</code> (ej. <em>January 1, 2020</em>).
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 11</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(
+    <span class="str">"date_added"</span>,
+    <span class="fn">to_date</span>(<span class="fn">trim</span>(<span class="fn">col</span>(<span class="str">"date_added"</span>)), <span class="str">"MMMM d, yyyy"</span>)
+)
+<span class="var">df_clean</span>.<span class="fn">select</span>(<span class="str">"title"</span>, <span class="str">"date_added"</span>).<span class="fn">show</span>(<span class="num">10</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s9">
+      <div class="section-header">
+        <div class="step-num">9</div>
+        <h2>Conversión de release_year a entero</h2>
+      </div>
+      <div class="desc">
+        PySpark infiere <code>release_year</code> como string al leer el CSV. Se hace un cast explícito a <code>int</code>.
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 12</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span> = <span class="var">df_clean</span>.<span class="fn">withColumn</span>(<span class="str">"release_year"</span>, <span class="fn">col</span>(<span class="str">"release_year"</span>).<span class="fn">cast</span>(<span class="str">"int"</span>))
+<span class="var">df_clean</span>.<span class="fn">select</span>(<span class="str">"title"</span>, <span class="str">"release_year"</span>).<span class="fn">show</span>(<span class="num">10</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s10">
+      <div class="section-header">
+        <div class="step-num">10</div>
+        <h2>Distribucion por tipo de contenido</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 13</span><span class="lang">Python</span></div>
+        <pre><span class="kw">from</span> <span class="var">pyspark.sql.functions</span> <span class="kw">import</span> <span class="fn">desc</span>
+
+<span class="var">df_clean</span>.<span class="fn">groupBy</span>(<span class="str">"type"</span>).<span class="fn">count</span>().<span class="fn">orderBy</span>(<span class="fn">desc</span>(<span class="str">"count"</span>)).<span class="fn">show</span>()</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s11">
+      <div class="section-header">
+        <div class="step-num">11</div>
+        <h2>Top 10 paises con mas contenido</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 14</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span>.<span class="fn">filter</span>(<span class="fn">col</span>(<span class="str">"country"</span>) != <span class="str">"Unknown"</span>)         .<span class="fn">groupBy</span>(<span class="str">"country"</span>).<span class="fn">count</span>()         .<span class="fn">orderBy</span>(<span class="fn">desc</span>(<span class="str">"count"</span>))         .<span class="fn">show</span>(<span class="num">10</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s12">
+      <div class="section-header">
+        <div class="step-num">12</div>
+        <h2>Contenido por año de lanzamiento</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 15</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span>.<span class="fn">groupBy</span>(<span class="str">"release_year"</span>).<span class="fn">count</span>()         .<span class="fn">orderBy</span>(<span class="fn">desc</span>(<span class="str">"release_year"</span>))         .<span class="fn">show</span>(<span class="num">15</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s13">
+      <div class="section-header">
+        <div class="step-num">13</div>
+        <h2>Verificacion final de nulos</h2>
+      </div>
+      <div class="desc">
+        Se repite el conteo de nulos sobre el DataFrame limpio para confirmar que el proceso fue exitoso.
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 16</span><span class="lang">Python</span></div>
+        <pre><span class="var">null_final</span> = <span class="var">df_clean</span>.<span class="fn">select</span>([
+    <span class="fn">count</span>(<span class="fn">when</span>(<span class="fn">isnull</span>(c), c)).<span class="fn">alias</span>(c) <span class="kw">for</span> c <span class="kw">in</span> <span class="var">df_clean</span>.columns
+])
+<span class="var">null_final</span>.<span class="fn">show</span>(truncate=<span class="kw">False</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s14">
+      <div class="section-header">
+        <div class="step-num">14</div>
+        <h2>Guardar el DataFrame limpio como CSV</h2>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="cell-label">celda 17</span><span class="lang">Python</span></div>
+        <pre><span class="var">df_clean</span>.<span class="fn">coalesce</span>(<span class="num">1</span>).<span class="fn">write</span>.<span class="fn">csv</span>(<span class="str">"netflix_clean_output"</span>, header=<span class="kw">True</span>, mode=<span class="str">"overwrite"</span>)
+<span class="fn">print</span>(<span class="str">"Dataset limpio guardado en: netflix_clean_output/"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="section" id="s15">
+      <div class="section-header">
+        <div class="step-num">15</div>
+        <h2>Resumen del proceso de limpieza</h2>
+      </div>
+      <table class="summary-table">
+        <thead>
+          <tr><th>Paso</th><th>Accion</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Carga del CSV con PySpark</td></tr>
+          <tr><td>2</td><td>Exploración: schema, filas y columnas</td></tr>
+          <tr><td>3</td><td>Conteo absoluto y porcentual de nulos</td></tr>
+          <tr><td>4 – 5</td><td>Detección y eliminación de duplicados</td></tr>
+          <tr><td>6</td><td>Drop de filas críticas nulas y relleno con <code>"Unknown"</code></td></tr>
+          <tr><td>7</td><td>Trim de espacios y normalización de <code>type</code> a minúsculas</td></tr>
+          <tr><td>8</td><td>Conversión de <code>date_added</code> a <code>DateType</code></td></tr>
+          <tr><td>9</td><td>Cast de <code>release_year</code> a entero</td></tr>
+          <tr><td>10 – 12</td><td>Análisis exploratorio post-limpieza</td></tr>
+          <tr><td>13</td><td>Verificación final de nulos</td></tr>
+          <tr><td>14</td><td>Exportación del dataset limpio a CSV</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  Netflix Titles — Limpieza de Datos con PySpark
+</footer>
+
+</body>
+</html>
