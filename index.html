@@ -486,7 +486,7 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
           <div>
             <p class="slide-cat-desc">Actividades diarias de clase: notas y ejercicios sobre fundamentos cloud, servicios AWS y arquitecturas de datos.</p>
           </div>
-          <span class="slide-badge">4 actividades</span>
+          <span class="slide-badge">5 actividades</span>
         </div>
         <div class="items-grid">
 
@@ -523,7 +523,7 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
               <div class="item-footer"><span class="item-status t-python">Python · Ejercicios</span></div>
             </div>
           </div>
-          <div class="item-card" onclick="window.open('./actividades/netflix_limpieza.html','_blank')" style="cursor:pointer">
+          <div class="item-card" onclick="window.open('./actividades/netflix_limpieza.ipynb','_blank')" style="cursor:pointer">
             <div class="item-img"><div class="item-img-inner bg-e">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div><span class="item-pill">Diaria 4</span></div>
@@ -531,6 +531,17 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
               <h3 class="item-title">Netflix — Limpieza de Datos</h3>
               <p class="item-desc">Notebook de Jupyter: limpieza y análisis del dataset de Netflix con Python y Pandas.</p>
               <div class="item-footer"><span class="item-status t-python">Python · Pandas · Notebook</span></div>
+            </div>
+          </div>
+
+          <div class="item-card" onclick="window.open('./actividades/actividad6sql.html','_blank')" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-h">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div><span class="item-pill">Diaria 5</span></div>
+            <div class="item-body">
+              <h3 class="item-title">Actividad 6 — SQL</h3>
+              <p class="item-desc">Ejercicios y consultas SQL como actividad diaria de clase: filtros, joins y agregaciones sobre bases de datos.</p>
+              <div class="item-footer"><span class="item-status t-sql">SQL · Queries</span></div>
             </div>
           </div>
         </div>
@@ -541,10 +552,23 @@ footer{position:relative;z-index:1;text-align:center;padding:18px;font-size:.72r
           <div>
             <p class="slide-cat-desc">Pipeline de datos end-to-end sobre AWS: ingesta, transformación, almacenamiento y visualización en producción.</p>
           </div>
-          <span class="slide-badge">Sin elementos</span>
+          <span class="slide-badge">1 proyecto</span>
         </div>
-        <div class="empty-state">
-          <span class="empty-shine">Aún no hay nada por aquí...</span>
+        <div class="items-grid">
+
+          <div class="item-card" style="cursor:pointer">
+            <div class="item-img"><div class="item-img-inner bg-b">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div><span class="item-pill">Final</span></div>
+            <div class="item-body">
+              <h3 class="item-title">NYC TLC Pipeline</h3>
+              <p class="item-desc">Pipeline de datos end-to-end sobre AWS: ingesta, transformación y visualización del dataset de taxis de Nueva York con Streamlit.</p>
+              <div class="item-footer" style="display:flex;gap:8px;flex-wrap:wrap;">
+                <a href="http://54.219.57.185:8501" target="_blank" onclick="event.stopPropagation()" class="item-status t-aws" style="text-decoration:none;cursor:pointer;">🚀 Live App</a>
+                <a href="https://github.com/CryoXen/nyc-tlc-pipeline" target="_blank" onclick="event.stopPropagation()" class="item-status t-iac" style="text-decoration:none;cursor:pointer;">GitHub</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       </div>
